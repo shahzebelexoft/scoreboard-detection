@@ -1,3 +1,4 @@
+import re
 import cv2
 import numpy as np
 from skimage.filters import sobel
@@ -129,3 +130,15 @@ def bbox(results):
         return box
     else:
         pass
+
+def extract_filename(filename):
+    # Remove the file extension
+    filename = filename.rsplit('.', 1)[0]
+    
+    # Remove numbers and symbols
+    cleaned_filename = re.sub('[^a-zA-Z\s]', '', filename)
+    
+    # Remove extra whitespace
+    cleaned_filename = ' '.join(cleaned_filename.split())
+    
+    return cleaned_filename

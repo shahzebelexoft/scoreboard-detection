@@ -87,4 +87,7 @@ def predict(video_path, storage_path, database_path):
     # Save the image reference and processing time in the database
     db.save_image_reference(database_path, f'{storage_path[:-4]}.jpg', end_time - start_time)
 
+    # Save the image reference and processing time in the firestore database
+    db.store_database(database_path, f'{storage_path[:-4]}.jpg', end_time - start_time)
+
     return frame, last_detected_scoreboard

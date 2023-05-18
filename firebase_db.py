@@ -2,14 +2,21 @@ import pyrebase
 import numpy as np
 from PIL import Image
 from io import BytesIO
-from config import FIREBASE_CONFIG
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+from config import FIREBASE_CONFIG, CRED
 
 class FirebaseClient:
-    def __init__(self, config = FIREBASE_CONFIG):
+    def __init__(self, config = FIREBASE_CONFIG, cred = CRED):
         # Initialize the Firebase app with the provided configuration
         self.firebase = pyrebase.initialize_app(config)
         # Get a reference to the Firebase Storage
         self.storage = self.firebase.storage()
+        if not firebase_admin._apps:
+            self.cred = credentials.Certificate(cred)
+            firebase_admin.initialize_app(self.cred)
+        self.db_s = firestore.client()
 
     def get(self, path):
         # Retrieve data from the Firebase Realtime Database at the specified path
@@ -41,3 +48,12 @@ class FirebaseClient:
                 "image_url": self.storage.child(storage_path).get_url(None),
                 "inference time taken": time}
         self.put(database_path, data)
+
+    def store_database(self, database_path, storage_path, time):
+        data = {"image_name": storage_path, 
+                "image_url": self.storage.child(storage_path).get_url(None),
+                "inference time taken": time}
+        
+        ref = self.db_s.collection(u'Users').document(data['image_name'])
+
+        ref.set(data)

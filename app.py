@@ -7,7 +7,7 @@ from wtforms import FileField, SubmitField
 from wtforms.validators import InputRequired
 from werkzeug.utils import secure_filename
 from detect_video_v3 import predict
-from flask import request
+from utils import *
 from flask import Flask, render_template, redirect, url_for
 
 app = Flask(__name__)
@@ -16,7 +16,7 @@ app.config['UPLOAD_FOLDER'] = r'upload'
 
 class UploadFileForm(FlaskForm):
     file = FileField("File", validators=[InputRequired()])
-    submit = SubmitField("Upload File")
+    submit = SubmitField("Process Video")
 
 class ProcessForm(FlaskForm):
     submit = SubmitField("Process Video")
@@ -53,6 +53,8 @@ def home():
         # Process the video and obtain the processed and detected images as NumPy arrays
 
         database_path, storage_path = os.path.split(videeo_path)
+
+        database_path = extract_filename(storage_path)
 
         processed_image, detected_image = predict(videeo_path, storage_path=storage_path, database_path=database_path)
         
