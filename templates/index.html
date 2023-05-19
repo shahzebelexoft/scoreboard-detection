@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scoreboard Detection</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Scoreboard Detection</h1>
+    <form method='POST' enctype='multipart/form-data'>
+        {{ upload_form.hidden_tag() }}
+        {{ upload_form.file() }}
+        {{ upload_form.submit() }}
+    </form>
+
+    {% if processed_base64 %}
+    <h2>Reference Image</h2>
+    <img src="data:image/png;base64,{{ processed_base64 }}" alt="Processed Image">
+    {% endif %}
+    
+    {% if detected_base64 %}
+    <h2>Detected Image</h2>
+    <img src="data:image/png;base64,{{ detected_base64 }}" alt="Detected Image">
+    {% endif %}
+</body>
+</html>
