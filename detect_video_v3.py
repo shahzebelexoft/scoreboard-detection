@@ -2,6 +2,7 @@ import cv2
 import time
 import numpy as np
 from utils import *
+import datetime
 from config import MODEL_PATH
 from ultralytics import YOLO
 from firebase_db import FirebaseClient
@@ -47,6 +48,16 @@ def predict(video_path, storage_path, database_path):
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
+
+            # Get the timestamp of the current frame
+            timestamp = cap.get(cv2.CAP_PROP_POS_MSEC)
+
+            # Convert the timestamp to a datetime object
+            timestamp = datetime.timedelta(milliseconds=timestamp)
+
+            # Format the timestamp as hours:minutes:seconds
+            timestamp_str = str(timestamp).split('.', 2)[0]
+
             # Detect objects using the YOLO model
             results = model(frame, conf=0.65, device='cpu')
 
@@ -82,12 +93,12 @@ def predict(video_path, storage_path, database_path):
     end_time = time.time()
 
     # Upload the detected scoreboard image to Firebase
-    db.upload_image(f'{storage_path[:-4]}.jpg', last_detected_scoreboard)
+    db.upload_image(storage_path, last_detected_scoreboard)
 
     # Save the image reference and processing time in the database
-    db.save_image_reference(database_path, f'{storage_path[:-4]}.jpg', end_time - start_time)
+    db.save_image_reference(database_path, storage_path, end_time - start_time, timestamp_str)
 
     # Save the image reference and processing time in the firestore database
-    db.store_database(database_path, f'{storage_path[:-4]}.jpg', end_time - start_time)
+    db.store_firestore(database_path, storage_path, end_time - start_time, timestamp_str)
 
     return frame, last_detected_scoreboard
