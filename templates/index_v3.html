@@ -33,7 +33,7 @@
 
         .firebase-link-button {
             position: absolute;
-            top: 10px;
+            top: 70px;
             right: 10px;
             display: inline-block;
             padding: 10px 20px;
@@ -67,8 +67,13 @@
     {% if detected_base64 %}
     <h2>Detected Image</h2>
     <img src="data:image/png;base64,{{ detected_base64 }}" alt="Detected Image">
-    <br>
-    <a href="{{ URL }}" target="_blank" class="firebase-link-button">Open Detected Image in Firebase</a>
+
+    <a href="{{ url_for('display', file_name=file_name) }}">
+        <button class="firebase-link-button">
+            Link to Video
+        </button>
+    </a>
+
     {% endif %}
 
     <div class="spinner-overlay" id="spinnerOverlay">
