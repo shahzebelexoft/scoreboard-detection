@@ -71,7 +71,7 @@ def score_board(video_path, storage_path, database_path):
                 timestamp_str = str(timestamp).split('.', 2)[0]
 
                 # Detect objects using the YOLO model
-                results = model(frame, conf=0.65, device='cpu')
+                results = model(frame, conf=0.65, device=0)
 
                 if len(results[0].boxes.xyxy) > 0:
                     last_detected = results[0].boxes.xyxy[0]

@@ -9,7 +9,7 @@ key = app.config['SECRET_KEY']
 app.config['UPLOAD_FOLDER'] = r'scoreboard/static/upload'
 upload_folder = app.config['UPLOAD_FOLDER']
 
-app.config['VIDEOS_FOLDER'] = r'scoreboard\static\videos'
+app.config['VIDEOS_FOLDER'] = r'scoreboard/static/videos'
 video_directory = app.config['VIDEOS_FOLDER']
 
 from scoreboard import routes
