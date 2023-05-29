@@ -52,20 +52,28 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-        
+        </nav>        
         <br>
         <h1>Files in {{full_video_path }} directory</h1>
         <br>
         <h2>Select file to make prediction</h2>
         <br>
 
-        {% for file in files %}
-        <div class="list-group">
-            <a href="{{ url_for('detection', full_video_path=full_video_path, file=file) }}" class="list-group-item list-group-item-action">{{ file }}</a>
+        {% for folder in folders %}
+        <div class="dropdown">
+            <button class="btn btn-primary btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ folder }}
+            </button>
             <br>
-        </div>
+            <div class="dropdown-menu btn-block">
+                {% for file in folder_files[folder] %}
+                    <a class="dropdown-item" href="{{url_for('detection', video_directory=video_directory, file=file, folder=folder)}}">{{ file }}</a>
+                {% endfor %}
+            </div>
+            </div>
         {% endfor %}
+    
+
 
         <div class="spinner-overlay" id="spinnerOverlay">
             <div class="spinner"></div>
@@ -83,7 +91,7 @@
     </style>
 
     <script>
-        var fileListItems = document.querySelectorAll('.list-group-item');
+        var fileListItems = document.querySelectorAll('.dropdown-menu');
 
         fileListItems.forEach(function(item) {
             item.addEventListener('click', function() {

@@ -49,6 +49,13 @@
             margin: 0 auto;
         }
 
+        #content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         </style>
 
         <meta charset="utf-8">
@@ -60,7 +67,7 @@
     </head>
 
     <body class="container">
-        <nav class = "navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class = "navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" href="#">Scoreboard Detector</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -88,12 +95,9 @@
 
         <br>
 
-        <form method="POST" action="/">
-            {{ directory_form.csrf_token }}
-            {{ directory_form.directory_path(class="form-control", placeholder="Enter the folder name") }}
-            <br>
-            {{ directory_form.submit(class="btn btn-primary btn-lg btn-block") }}
-        </form>
+        <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('view_files', video_directory=video_directory) }}">
+            Select Sports Directory
+        </a>
 
         <br>
 

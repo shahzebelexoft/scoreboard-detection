@@ -23,7 +23,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
     
         h1, h2 {
@@ -47,11 +46,13 @@
             </ul>
         </div>
     </nav>
+    <br>
+    <h1>Watching Video {{ file }}</h1>
     <div id="content">
-    <h1>Watching Video {{ file_name }}</h1>
     <br>
     <video id="video-player" controls>
-        <source src="\..\..\{{full_video_path}}\{{ file_name }}" type="video/mp4">
+        {% comment %} <source src="{{video_directory}}\{{ folder }}\{{file}}" type="video/mp4">s {% endcomment %}
+        <source src="../../../../static/videos/{{ folder }}/{{file}}" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     </div>

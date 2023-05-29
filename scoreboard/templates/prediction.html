@@ -21,6 +21,13 @@
             margin: 0 auto;
         }
 
+        #content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         </style>
 
         <meta charset="utf-8">
@@ -47,11 +54,11 @@
         </nav>
 
         <br>
-        <h1>Prediction for {{ file_name }}</h1>
+        <h1>Prediction for {{ file_ }}</h1>
         <br>
 
         {% if processed_base64 %}
-            <a class="btn btn-primary btn-lg btn-block btn-success" href="{{ url_for('display_2',full_video_path=full_video_path, file_name=file_name) }}">
+            <a class="btn btn-primary btn-lg btn-block btn-success" href="{{ url_for('display_2', video_directory=video_directory, folder=folder, file=file) }}">
                 Watch Video
             </a>
         {% endif %}

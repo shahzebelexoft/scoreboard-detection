@@ -13,7 +13,7 @@ from scoreboard.models import process_video
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     upload_form = UploadFileForm()
-    directory_form = DirectoryForm()
+    # directory_form = DirectoryForm()
 
     if upload_form.validate_on_submit():
         file = upload_form.file.data
@@ -39,26 +39,31 @@ def home():
         processed_base64, detected_base64, file_name = process_video(video_path, storage_path, database_path)
 
         # Render the template with the forms and base64 strings of the images
-        return render_template('home.html', upload_form=upload_form, directory_form=directory_form,
-                                processed_base64=processed_base64, detected_base64=detected_base64,
-                                file_name=file_name)
+        return render_template('home.html', upload_form=upload_form, processed_base64=processed_base64, 
+                                detected_base64=detected_base64, file_name=file_name)
 
-    elif directory_form.validate_on_submit():
-        directory_path = directory_form.directory_path.data
+    # elif directory_form.validate_on_submit():
+    #     directory_path = directory_form.directory_path.data
 
-        full_video_path = os.path.join(video_directory, directory_path)
+    #     # full_video_path = os.path.join(video_directory, directory_path)
 
-        full_video_path = quote(full_video_path)
+    #     # full_video_path = quote(full_video_path)
 
-        return redirect(f'/view/files/{full_video_path}')
+    #     return redirect(f'/view/files/{directory_path}')
 
-    return render_template('home.html', upload_form=upload_form, directory_form=directory_form)
+    return render_template('home.html', upload_form=upload_form, video_directory=video_directory)
 
 
-@app.route('/view/files/<full_video_path>', methods=['GET', 'POST'])
-def view_files(full_video_path):
-    files = os.listdir(full_video_path)
-    return render_template('files.html', files=files, full_video_path=full_video_path)
+@app.route('/view/files/<video_directory>', methods=['GET', 'POST'])
+def view_files(video_directory):
+    folders = os.listdir(video_directory)
+    
+    folder_files = {}
+    
+    for folder in folders:
+        folder_files[folder] = os.listdir(os.path.join(video_directory, folder))
+    
+    return render_template('files.html', video_directory=video_directory, folders=folders, folder_files=folder_files)
 
 
 @app.route('/view/video_1/<file_name>')
@@ -66,9 +71,9 @@ def display_1(file_name):
     return render_template('video_1.html', file_name=file_name)
 
 
-@app.route('/detection/<full_video_path>/<file>', methods=['GET', 'POST'])
-def detection(full_video_path, file):
-    video_path = os.path.join(full_video_path, file)
+@app.route('/detection/<video_directory>/<folder>/<file>', methods=['GET', 'POST'])
+def detection(video_directory, folder, file):
+    video_path = os.path.join(video_directory, folder, file)
 
     # Process the video and obtain the processed and detected images as NumPy arrays
     database_path, storage_path = os.path.split(video_path)
@@ -77,11 +82,10 @@ def detection(full_video_path, file):
     processed_base64, detected_base64, file_name = process_video(video_path, storage_path, database_path)
 
     return render_template('prediction.html', processed_base64=processed_base64, detected_base64=detected_base64,
-                            file_name=file_name, full_video_path=full_video_path)
+                            file=file, folder=folder, video_directory=video_directory)
 
-
-@app.route('/view/video_2/<full_video_path>/<file_name>')
-def display_2(full_video_path, file_name):
+@app.route('/view/video_2/<video_directory>/<folder>/<file>')
+def display_2(video_directory, folder, file):
     # folders = full_video_path.split("\\")
     # folder = folders[2]
-    return render_template('video_2.html', file_name=file_name, full_video_path=full_video_path)
+    return render_template('video_2.html', video_directory=video_directory, folder=folder, file=file)
