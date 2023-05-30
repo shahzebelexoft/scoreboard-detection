@@ -17,6 +17,8 @@ def home():
 
     if upload_form.validate_on_submit():
         file = upload_form.file.data
+        
+        print(f"Uploading file: {file.filename}")
 
         try:
             # Create the 'upload' upload_folder if it doesn't exist
@@ -35,6 +37,8 @@ def home():
         # Process the video and obtain the processed and detected images as NumPy arrays
         database_path, storage_path = os.path.split(video_path)
         database_path = extract_filename(storage_path)
+        
+        print(f"Starting to process the video: {database_path}")
 
         processed_base64, detected_base64, file_name = process_video(video_path, storage_path, database_path)
 
@@ -68,7 +72,7 @@ def view_files(video_directory):
 
 @app.route('/view/video_1/<file_name>')
 def display_1(file_name):
-    return render_template('video_1.html', file_name=file_name)
+    return render_template('video_1.html', file_name=file_name, video_directory=video_directory)
 
 
 @app.route('/detection/<video_directory>/<folder>/<file>', methods=['GET', 'POST'])

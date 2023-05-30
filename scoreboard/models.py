@@ -9,9 +9,18 @@ from ultralytics import YOLO
 from scoreboard.utils import *
 from scoreboard.config import MODEL_PATH
 from scoreboard.database import FirebaseClient
+import torch
 
 
 def score_board(video_path, storage_path, database_path):
+    
+    #Set the device to gpu or cpu
+    if torch.cuda.is_available():
+        torch.cuda.set_device(0)  # Set the device index if multiple GPUs are available
+        DEVICE = torch.device("cuda")
+    else:
+        DEVICE = torch.device("cpu")
+        
     # Get the current date and time
     current_datetime = datetime.datetime.now()
 
@@ -71,7 +80,7 @@ def score_board(video_path, storage_path, database_path):
                 timestamp_str = str(timestamp).split('.', 2)[0]
 
                 # Detect objects using the YOLO model
-                results = model(frame, conf=0.65, device=0)
+                results = model(frame, conf=0.65, device=DEVICE)
 
                 if len(results[0].boxes.xyxy) > 0:
                     last_detected = results[0].boxes.xyxy[0]
