@@ -33,20 +33,16 @@
     </style>
 </head>
 <body>
-    <nav class = "navbar navbar-expand-md navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="{{ url_for('home') }}">Scoreboard Detector</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('home') }}">Upload File <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item-activate">
-                    <a class="nav-link" href="{{ url_for('view_files', video_directory=video_directory) }}">Select Files from system <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
+            <div class="navbar-nav">
+                <a class="nav-link" href="{{ url_for('home') }}" onclick="toggleBold(this)">Upload File <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('view_files', video_directory=video_directory) }}" onclick="toggleBold(this)">Select Files from system <span class="sr-only">(current)</span></a>
+            </div>
         </div>
     </nav>
     <br>
