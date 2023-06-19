@@ -55,10 +55,10 @@ scoreboard detection algorithm and determining the winner based on the extracted
 
 To download the repository, you can use the following command:
 
-'''
+```
 bash
 git clone https://github.com/shahzebelexoft/scoreboard-detection.git
-'''
+```
 
 This command will clone the repository from the specified URL and create a local copy on your machine.
 
@@ -68,19 +68,19 @@ For Linux users, you can refer to the installation guide at https://docs.anacond
 
 To navigate to the project directory, open the terminal and use the 'cd' command:
 
-'''
+```
 bash
 cd {PROJECT_DIRECTORY}
-'''
+```
 
 Replace `PROJECT_DIRECTORY}` with the actual path of your project directory.
 
 To create the environment and install the required dependencies, enter the following commands in the terminal:
 
-'''
+```
 bash
 conda env create -f environment.yml
-'''
+```
 
 Please make sure you have an environment.yml file in your project directory containing the necessary specifications for the environment setup.
 
