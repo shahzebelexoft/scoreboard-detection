@@ -83,10 +83,15 @@ Please make sure you have an environment.yml file in your project directory cont
 
 ## TO-DO:
 
-**Gather more dataset:** Collect additional data to enhance the dataset.
-**Label a few datasets and clone the labels:** Manually annotate a subset of the dataset and replicate the labels to speed up the labeling process.
-**Train models on the dataset:** Train various models using the dataset.
-**Evaluate the model on every available video:** Assess the model's performance by testing it on each video in the dataset.
-**Perform Optical Character Recognition (OCR) on the detected scoreboard:** Utilize OCR techniques to extract text information from the identified scoreboards.
-**Determine the winning team based on respective scores:** Analyze the scores of the respective teams and declare the winner based on the comparison.
+* **Gather more dataset:** Collect additional data to enhance the dataset.
+
+* **Label a few datasets and clone the labels:** Manually annotate a subset of the dataset and replicate the labels to speed up the labeling process.
+
+* **Train models on the dataset:** Train various models using the dataset.
+
+* **Evaluate the model on every available video:** Assess the model's performance by testing it on each video in the dataset.
+
+* **Perform Optical Character Recognition (OCR) on the detected scoreboard:** Utilize OCR techniques to extract text information from the identified scoreboards.
+
+* **Determine the winning team based on respective scores:** Analyze the scores of the respective teams and declare the winner based on the comparison.
 
